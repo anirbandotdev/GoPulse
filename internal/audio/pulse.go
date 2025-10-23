@@ -32,3 +32,25 @@ func SwitchProfile(device, profile string) error {
 	return cmd.Run()
 }
 
+func GetCurrentProfile(device string) (string , error) {
+	cmd := exec.Command("pactl" , "list" , "cards")
+	out , err := cmd.Output()
+	if err != nil {
+        return "", err
+    }
+
+	lines := strings.Split(string(out) , "\n")
+	var current string
+	
+	for _ , line := range lines{
+		if strings.Contains(line , device) {
+			current = device
+		}
+
+		if current != "" && strings.Contains(line , "Active Profile: "){
+			return strings.TrimSpace(strings.TrimPrefix(line , "Active Profile: ")) , nil
+		}
+	}
+
+	return "" , nil
+}
