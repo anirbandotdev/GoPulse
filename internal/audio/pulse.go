@@ -26,3 +26,9 @@ func GetSinks() ([]string, error) {
 	}
 	return sinks, nil
 }
+
+func SwitchProfile(device, profile string) error {
+	cmd := exec.Command("pactl", "set-card-profile", device, profile)
+	return cmd.Run()
+}
+
