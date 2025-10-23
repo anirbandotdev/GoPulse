@@ -54,3 +54,38 @@ func GetCurrentProfile(device string) (string , error) {
 
 	return "" , nil
 }
+
+func GetBluetoothCard() (string, error) {
+	cmd := exec.Command("pactl", "list", "short", "cards")
+	out, err := cmd.Output()
+	if err != nil {
+		return "", err
+	}
+
+	lines := strings.Split(string(out), "\n")
+	for _, line := range lines {
+		if strings.Contains(line, "bluez_card.") {
+			fields := strings.Fields(line)
+			if len(fields) > 1 {
+				return fields[1], nil
+			}
+		}
+	}
+	return "", nil
+}
+
+
+var profileAliases = map[string]string{
+	"music": "a2dp_sink",
+	"call":  "headset_head_unit",
+	"a2dp":  "a2dp_sink",
+	"hsp":   "headset_head_unit",
+	"hfp":   "headset_head_unit",
+}
+
+func ResolveProfileAlias(input string) string {
+	if real, ok := profileAliases[strings.ToLower(input)]; ok {
+		return real
+	}
+	return input 
+}

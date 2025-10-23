@@ -4,5 +4,5 @@ build:
 	go build -o bin/$(APP_NAME) ./cmd/gopulse
 	
 install:
-	sudo cp bin/$(APP_NAME) /usr/local/bin/
+	sudo install -m755 bin/$(APP_NAME) /usr/local/bin/$(APP_NAME)
 
