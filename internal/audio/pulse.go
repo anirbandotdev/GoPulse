@@ -76,11 +76,11 @@ func GetBluetoothCard() (string, error) {
 
 
 var profileAliases = map[string]string{
-	"music": "a2dp_sink",
-	"call":  "headset_head_unit",
-	"a2dp":  "a2dp_sink",
-	"hsp":   "headset_head_unit",
-	"hfp":   "headset_head_unit",
+	"music": "a2dp-sink",
+	"call":  "headset-head-unit",
+	"a2dp":  "a2dp-sink",
+	"hsp":   "headset-head-unit",
+	"hfp":   "headset-head-unit",
 }
 
 func ResolveProfileAlias(input string) string {

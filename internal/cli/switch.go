@@ -8,7 +8,7 @@ import (
 
 func init() {
     cmd := cobra.Command{
-        Use:   "switch [profile]>",
+        Use:   "switch [profile]",
         Short: "Switch a Bluetooth device audio profile (use alias for profile : music/call/ad2p/hsp/hfp)",
         Args:  cobra.ExactArgs(1),
         RunE: func(cmd *cobra.Command, args []string) error {
