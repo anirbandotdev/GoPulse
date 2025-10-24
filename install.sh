@@ -19,6 +19,17 @@ if ! command -v go >/dev/null 2>&1; then
   exit 1
 fi
 
+# --- Prepare and fetch dependencies ---
+if [ ! -f "go.mod" ]; then
+  echo -e "${RED}❌ No go.mod found. Please run this script from the project root.${NC}"
+  exit 1
+fi
+
+echo -e "${YELLOW}📦 Ensuring Go dependencies are downloaded...${NC}"
+go mod tidy
+go mod download
+
+
 # --- Build the binary ---
 echo -e "${YELLOW}🏗️  Building ${APP_NAME}...${NC}"
 mkdir -p "${BIN_DIR}"
