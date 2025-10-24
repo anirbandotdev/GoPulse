@@ -3,6 +3,7 @@ package audio
 import (
 	"os/exec"
 	"strings"
+	"github.com/anirbandotdev/gopulse/constants"
 )
 
 func GetSinks() ([]string, error) {
@@ -48,7 +49,7 @@ func GetCurrentProfile(device string) (string , error) {
 		}
 
 		if current != "" && strings.Contains(line , "Active Profile: "){
-			return strings.TrimSpace(strings.TrimPrefix(line , "Active Profile: ")) , nil
+			return strings.TrimPrefix(strings.TrimSpace(line) , "Active Profile: ") , nil
 		}
 	}
 
@@ -75,16 +76,8 @@ func GetBluetoothCard() (string, error) {
 }
 
 
-var profileAliases = map[string]string{
-	"music": "a2dp-sink",
-	"call":  "headset-head-unit",
-	"a2dp":  "a2dp-sink",
-	"hsp":   "headset-head-unit",
-	"hfp":   "headset-head-unit",
-}
-
 func ResolveProfileAlias(input string) string {
-	if real, ok := profileAliases[strings.ToLower(input)]; ok {
+	if real, ok := constants.ProfileAliases[strings.ToLower(input)]; ok {
 		return real
 	}
 	return input 
